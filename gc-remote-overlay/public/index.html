@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel GC</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    input, button { font-size: 1.2rem; padding: 0.5rem; margin-top: 1rem; width: 100%; max-width: 600px; }
+    #buttons { display: flex; gap: 1rem; margin-top: 1rem; }
+    .on { background-color: #1e90ff; color: white; }
+    .off { background-color: #ccc; color: black; }
+  </style>
+</head>
+<body>
+  <h2>Texto del GC:</h2>
+  <input type="text" id="gcText" placeholder="Escribe tu texto aquí" value="PRÓXIMO INVITADO: TOMÁS MANDIOLA" />
+  <div id="buttons">
+    <button onclick="send('show')" class="on">Mostrar GC</button>
+    <button onclick="send('hide')" class="off">Ocultar GC</button>
+  </div>
+
+  <script>
+    function send(action) {
+      fetch('/api/gc', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: document.getElementById('gcText').value, action })
+      });
+    }
+  </script>
+</body>
+</html>

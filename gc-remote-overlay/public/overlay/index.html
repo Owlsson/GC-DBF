@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body, html {
+      margin: 0; padding: 0; overflow: hidden;
+    }
+    #text {
+      position: absolute;
+      bottom: 80px;
+      left: 10%;
+      width: 80%;
+      color: white;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: bold;
+      font-size: 2.5rem;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay loop muted>
+    <source src="GC_CANVA_DBF.mp4" type="video/mp4" />
+  </video>
+  <div id="text"></div>
+  <script>
+    async function load() {
+      const res = await fetch('state.json');
+      const data = await res.json();
+      const textBox = document.getElementById('text');
+      textBox.innerText = data.text;
+      if (data.action === 'show') {
+        textBox.classList.add('visible');
+      } else {
+        textBox.classList.remove('visible');
+      }
+    }
+    setInterval(load, 2000);
+    load();
+  </script>
+</body>
+</html>
